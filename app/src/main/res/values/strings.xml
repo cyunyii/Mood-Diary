@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Mood Record</string>
+    <string name="Add">AddNote</string>
+    <string name="mood_theme">Your mood theme this week is</string>
+    <string name="see_detail">See Detail</string>
+    <string name="record_title">Title</string>
+    <string name="record_content">Write you feelings here...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
