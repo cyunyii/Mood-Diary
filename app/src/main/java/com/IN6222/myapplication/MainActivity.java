@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 String userPassword=password.getText().toString();
 
                 signInFirebase(userMail,userPassword);
+                Intent intent=new Intent(MainActivity.this,MainPage.class);
+                startActivity(intent);
             }
         });
 

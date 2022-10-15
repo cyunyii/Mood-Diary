@@ -5,9 +5,9 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/head_see_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_record.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_record.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_recording.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_recording.xml" value="0.165" />
         <entry key="app/src/main/res/layout/item_detail.xml" value="0.1" />
       </map>
     </option>
@@ -17,5 +17,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>

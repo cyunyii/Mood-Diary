@@ -27,6 +27,7 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:onClick="onClick"
             android:padding="10dp"
             android:src="@mipmap/search"></ImageView>
     </RelativeLayout>
@@ -42,13 +43,10 @@
         android:padding="10dp"
         android:scrollbars="none"></ListView>
 
-    <!--    <ImageButton-->
-    <!--        android:layout_width="50dp"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:src=""-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
+        android:onClick="onClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

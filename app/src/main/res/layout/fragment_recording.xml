@@ -17,6 +17,33 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"></GridView>
 
+    <RelativeLayout
+        android:id="@+id/frag_record_tagChoosen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@+id/mood_icon"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/frag_record_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/happy" />
+
+        <TextView
+            android:id="@+id/frag_record_tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/frag_record_img"
+            android:text="Happy"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
     <EditText
         android:id="@+id/record_Title"
         android:layout_width="match_parent"
@@ -27,16 +54,16 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:padding="10dp"
-        android:layout_below="@+id/mood_icon"></EditText>
+        android:layout_below="@+id/frag_record_tagChoosen"></EditText>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/record_Title"
-        android:hint="@string/record_content"
+        android:background="@color/white"
         android:gravity="top"
-        android:padding="10dp"
-        android:background="@color/white" />
+        android:hint="@string/record_content"
+        android:padding="10dp" />
 
 
 </RelativeLayout>
