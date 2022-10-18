@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userMail=mail.getText().toString();
-                String userPassword=password.getText().toString();
-
-                signInFirebase(userMail,userPassword);
+//                String userMail=mail.getText().toString();
+//                String userPassword=password.getText().toString();
+//
+//                signInFirebase(userMail,userPassword);
                 Intent intent=new Intent(MainActivity.this,MainPage.class);
                 startActivity(intent);
             }

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecordActivity"
-    android:orientation="vertical"
-    android:background="@color/grey_f3f3f3">
+    android:orientation="vertical">
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -32,13 +31,13 @@
 </RelativeLayout>
 
     <GridView
-        android:id="@+id/mood_icon"
+        android:id="@+id/mood_imgList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/white"
-        android:numColumns="4"
+        android:numColumns="5"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"></GridView>
 
@@ -48,7 +47,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_below="@+id/mood_icon"
-        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:padding="10dp">
 
         <ImageView
@@ -75,7 +74,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/record_title"
         android:background="@color/white"
-        android:textSize="20sp"
+        android:textSize="26sp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:paddingLeft="10dp"
@@ -88,7 +87,7 @@
         android:background="@color/white"
         android:gravity="top"
         android:hint="@string/record_content"
-        android:padding="10dp" />
+        android:padding="11dp" />
 
 
 </LinearLayout>
