@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mood Record</string>
+    <string name="app_name">Mood Diary</string>
     <string name="Add">AddNote</string>
     <string name="mood_theme">Your mood theme this week is</string>
     <string name="see_detail">See Detail</string>

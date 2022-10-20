@@ -2,6 +2,7 @@ package com.IN6222.myapplication.RecordPage;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,9 @@ public class GridViewAdapter extends BaseAdapter {
         img.setImageResource(moodType.getImageId());
         text.setText(moodType.getDescription());
         if(selectPosition==i){
-            text.setTextColor(Color.parseColor("#C0DCC0"));
+            text.setTextSize(14);
+            text.setTypeface(null, Typeface.BOLD);
+//            text.setTextColor(Color.parseColor("#C0DCC0"));
         }
 
 
