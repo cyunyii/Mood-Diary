@@ -1,10 +1,13 @@
 package com.IN6222.myapplication.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Array;
+import com.IN6222.myapplication.bean.MoodType;
+import com.IN6222.myapplication.bean.RecordBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,31 @@ public class DBManager {
 
         return list;
     }
+
+    /**
+     *     int id;
+     *     String mood;
+     *     int imgId;
+     *     String title;
+     *     String content;
+     *     String date;
+     *     int year;
+     *     int month;
+     * @param recordBean
+     */
+    public static void insertRecord(RecordBean recordBean){
+
+        ContentValues values=new ContentValues();
+        values.put("mood",recordBean.getMood());
+        values.put("imgId",recordBean.getImgId());
+        values.put("title",recordBean.getTitle());
+        values.put("content",recordBean.getContent());
+        values.put("date",recordBean.getDate());
+        values.put("year",recordBean.getYear());
+        values.put("month",recordBean.getMonth());
+        db.insert("record", null, values);
+    }
+
 
 
 }

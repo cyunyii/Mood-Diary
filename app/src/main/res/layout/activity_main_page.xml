@@ -46,16 +46,19 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:onClick="onClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:src="@mipmap/add"
-        android:contentDescription="@string/Add"
-        app:backgroundTint="@color/grey_f3f3f3"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp" />
+        android:layout_gravity="end|bottom"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/Add"
+        android:onClick="onClick"
+        android:src="@mipmap/add"
+        app:backgroundTint="@color/grey_f3f3f3" />
 
 
 </RelativeLayout>

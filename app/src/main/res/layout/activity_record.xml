@@ -51,28 +51,38 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/frag_record_img"
+            android:id="@+id/select_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/happy" />
 
         <TextView
-            android:id="@+id/frag_record_tv_type"
+            android:id="@+id/select_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/frag_record_img"
+            android:layout_toRightOf="@id/select_img"
             android:text="Happy"
+            android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/record_time"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="16dp"></TextView>
     </RelativeLayout>
+
 
     <EditText
         android:id="@+id/record_Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/record_title"
+        android:singleLine="true"
         android:background="@color/white"
         android:textSize="26sp"
         android:textColor="@color/black"
@@ -80,14 +90,35 @@
         android:paddingLeft="10dp"
         android:layout_below="@+id/frag_record_tagChoosen"></EditText>
 
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/record_Title"
-        android:background="@color/white"
-        android:gravity="top"
-        android:hint="@string/record_content"
-        android:padding="11dp" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/record_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="@string/record_content"
+            android:padding="11dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="end|bottom"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="Save"
+            android:src="@mipmap/save"
+            app:backgroundTint="@color/white" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

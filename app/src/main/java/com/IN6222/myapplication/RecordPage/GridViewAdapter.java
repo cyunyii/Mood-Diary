@@ -1,7 +1,6 @@
 package com.IN6222.myapplication.RecordPage;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.IN6222.myapplication.R;
-import com.IN6222.myapplication.db.MoodType;
-
-import org.w3c.dom.Text;
+import com.IN6222.myapplication.bean.MoodType;
 
 import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
+    public int selectPosition=0;
     Context context;
     List<MoodType> moodTypesList;
-    int selectPosition=0;
 
     public GridViewAdapter(Context context, List<MoodType> moodTypesList) {
         this.context = context;
@@ -55,7 +52,6 @@ public class GridViewAdapter extends BaseAdapter {
         if(selectPosition==i){
             text.setTextSize(14);
             text.setTypeface(null, Typeface.BOLD);
-//            text.setTextColor(Color.parseColor("#C0DCC0"));
         }
 
 

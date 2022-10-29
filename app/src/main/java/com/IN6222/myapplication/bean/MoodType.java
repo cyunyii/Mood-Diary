@@ -1,4 +1,4 @@
-package com.IN6222.myapplication.db;
+package com.IN6222.myapplication.bean;
 
 /**
  * Mood Type
