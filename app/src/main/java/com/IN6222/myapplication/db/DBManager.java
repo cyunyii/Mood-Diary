@@ -52,7 +52,7 @@ public class DBManager {
      *     int day;
      * @param recordBean
      */
-    public static void insertRecord(RecordBean recordBean){
+    public static long insertRecord(RecordBean recordBean){
 
         ContentValues values=new ContentValues();
         values.put("mood",recordBean.getMood());
@@ -63,8 +63,25 @@ public class DBManager {
         values.put("year",recordBean.getYear());
         values.put("month",recordBean.getMonth());
         values.put("day",recordBean.getDay());
-        db.insert("record", null, values);
+        long id=db.insert("record", null, values);
         Log.i("MoodType","insert mood type successfully.");
+        return id;
+
+    }
+
+    public static void updateRecord(RecordBean recordBean){
+        ContentValues values=new ContentValues();
+        values.put("id",recordBean.getId());
+        values.put("mood",recordBean.getMood());
+        values.put("imgId",recordBean.getImgId());
+        values.put("title",recordBean.getTitle());
+        values.put("content",recordBean.getContent());
+        values.put("date",recordBean.getDate());
+        values.put("year",recordBean.getYear());
+        values.put("month",recordBean.getMonth());
+        values.put("day",recordBean.getDay());
+        db.update("record",values, "id = ?", new String[] { String.valueOf(recordBean.getId())});
+
     }
 
     /**

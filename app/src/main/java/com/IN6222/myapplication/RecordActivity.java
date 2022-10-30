@@ -2,6 +2,7 @@ package com.IN6222.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +40,11 @@ public class RecordActivity extends AppCompatActivity {
 
     String time;
 
+    //recordBean.id (use to update)
+    long id;
+    boolean firstTimeSave=true;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,18 +58,32 @@ public class RecordActivity extends AppCompatActivity {
         title=findViewById(R.id.record_Title);
         content=findViewById(R.id.record_content);
 
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        time=sdf.format(date);
-        recordTime.setText(time);
-        
-        initBean();
-
-
         //load and fill gridview
         LoadMoodImg();
+
+        Intent intent=getIntent();
+        if(intent!=null){
+            RecordBean bean=(RecordBean) intent.getSerializableExtra("bean");
+            if(bean!=null){
+                this.recordBean=bean;
+                restoreDetail();
+            }
+            firstTimeSave=false;
+        }
+        else {
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            time = sdf.format(date);
+            recordTime.setText(time);
+            initBean();
+        }
+
+
+
         //set image icon click event
         setImgClick();
+        //inflate from activity_main, display details immediately
+
 
         // click fab_save to store data
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +95,13 @@ public class RecordActivity extends AppCompatActivity {
                 String RecordContent=content.getText().toString();
                 recordBean.setTitle(RecordTitle);
                 recordBean.setContent(RecordContent);
-                savetoDB();
+                if(firstTimeSave){
+                    id=savetoDB();
+                    firstTimeSave=false;
+                }else{
+                    updateDB();
+                }
+
                 Toast.makeText(getApplicationContext(), "Save Successfully",
                         Toast.LENGTH_SHORT).show();
 
@@ -89,6 +115,8 @@ public class RecordActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void showTimeDialog() {
         SelectTimeDialog selectTimeDialog = new SelectTimeDialog(this);
@@ -108,8 +136,11 @@ public class RecordActivity extends AppCompatActivity {
 
     }
 
-    private void savetoDB() {
-        DBManager.insertRecord(recordBean);
+    private long savetoDB() {
+        return DBManager.insertRecord(recordBean);
+    }
+    private void updateDB() {
+        DBManager.updateRecord(recordBean);
     }
 
     private void initBean() {
@@ -122,6 +153,32 @@ public class RecordActivity extends AppCompatActivity {
         recordBean.setYear(calendar.get(Calendar.YEAR));
         recordBean.setMonth(calendar.get(Calendar.MONTH));
         recordBean.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+
+
+    }
+
+    /**
+     *     GridView gridView;
+     *     List<MoodType> imglist;
+     *     ImageView selectImg;
+     *     TextView selectDes;
+     *     TextView recordTime;
+     *     EditText title;
+     *     EditText content;
+     *     private GridViewAdapter adapter;
+     *     RecordBean recordBean;
+     *     FloatingActionButton saveButton;
+     */
+    private void restoreDetail() {
+        System.out.println("--------------");
+        System.out.println(recordBean.getContent());
+        selectImg.setImageResource(recordBean.getImgId());
+        selectDes.setText(recordBean.getMood());
+        recordTime.setText(recordBean.getDate());
+        title.setText(recordBean.getTitle());
+        content.setText(recordBean.getContent());
+
+        adapter.notifyDataSetChanged();
 
 
     }

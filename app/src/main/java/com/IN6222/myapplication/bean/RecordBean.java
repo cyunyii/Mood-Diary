@@ -1,6 +1,10 @@
 package com.IN6222.myapplication.bean;
 
-public class RecordBean {
+import java.io.Serializable;
+
+public class RecordBean implements Serializable {
+    private static final long serialVersionUID=1L;
+
     int id;
     String mood;
     int imgId;

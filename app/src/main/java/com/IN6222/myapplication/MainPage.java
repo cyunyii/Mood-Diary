@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.IN6222.myapplication.Adapter.RecordItemAdapter;
@@ -37,7 +38,17 @@ public class MainPage extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadDataBase();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                RecordBean recordBean=recordList.get(i);
+                Intent intent=new Intent(MainPage.this,RecordActivity.class);
+                intent.putExtra("bean",recordBean);
+                startActivity(intent);
+            }
+        });
     }
+
 
     private void loadDataBase() {
         List<RecordBean> list= DBManager.searchAllRecords();
