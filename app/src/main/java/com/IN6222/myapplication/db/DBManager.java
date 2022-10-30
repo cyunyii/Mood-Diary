@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.IN6222.myapplication.bean.MoodType;
 import com.IN6222.myapplication.bean.RecordBean;
@@ -62,6 +63,7 @@ public class DBManager {
         values.put("year",recordBean.getYear());
         values.put("month",recordBean.getMonth());
         db.insert("record", null, values);
+        Log.i("MoodType","insert mood type successfully.");
     }
 
 

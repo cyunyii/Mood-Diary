@@ -3,7 +3,9 @@ package com.IN6222.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -15,6 +17,7 @@ import com.IN6222.myapplication.RecordPage.GridViewAdapter;
 import com.IN6222.myapplication.bean.RecordBean;
 import com.IN6222.myapplication.db.DBManager;
 import com.IN6222.myapplication.bean.MoodType;
+import com.IN6222.myapplication.utils.SelectTimeDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -53,7 +56,7 @@ public class RecordActivity extends AppCompatActivity {
         content=findViewById(R.id.record_content);
 
         Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm");
         time=sdf.format(date);
         recordTime.setText(time);
         
@@ -81,6 +84,31 @@ public class RecordActivity extends AppCompatActivity {
 
             }
         });
+
+        recordTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimeDialog();
+            }
+        });
+    }
+
+    private void showTimeDialog() {
+        SelectTimeDialog selectTimeDialog = new SelectTimeDialog(this);
+        selectTimeDialog.show();
+        //set ensureListener
+        selectTimeDialog.setTimeEnsureListener(new SelectTimeDialog.TimeEnsureListener() {
+            @Override
+            public void onEnsure(String time, int year, int month, int day) {
+                recordTime.setText(time);
+                recordBean.setDate(time);
+                recordBean.setDay(day);
+                recordBean.setYear(year);
+                recordBean.setMonth(month);
+            }
+        });
+
+
     }
 
     private void savetoDB() {
@@ -96,6 +124,8 @@ public class RecordActivity extends AppCompatActivity {
         Calendar calendar=Calendar.getInstance();
         recordBean.setYear(calendar.get(Calendar.YEAR));
         recordBean.setMonth(calendar.get(Calendar.MONTH));
+        recordBean.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+
 
     }
 

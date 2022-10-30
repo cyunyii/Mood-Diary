@@ -54,7 +54,6 @@ public class GridViewAdapter extends BaseAdapter {
             text.setTypeface(null, Typeface.BOLD);
         }
 
-
         return view;
     }
 }

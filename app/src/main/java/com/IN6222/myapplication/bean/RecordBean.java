@@ -6,14 +6,17 @@ public class RecordBean {
     int imgId;
     String title;
     String content;
+    //time string
     String date;
+    //for search function
     int year;
     int month;
+    int day;
 
     public RecordBean() {
     }
 
-    public RecordBean(int id, String mood, int imgId, String title, String content, String date, int year, int month) {
+    public RecordBean(int id, String mood, int imgId, String title, String content, String date, int year, int month,int day) {
         this.id = id;
         this.mood = mood;
         this.imgId = imgId;
@@ -22,6 +25,7 @@ public class RecordBean {
         this.date = date;
         this.year = year;
         this.month = month;
+        this.day=day;
     }
 
     public int getId() {
@@ -86,5 +90,9 @@ public class RecordBean {
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 }
