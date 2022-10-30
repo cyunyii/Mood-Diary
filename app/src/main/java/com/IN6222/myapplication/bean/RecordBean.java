@@ -60,6 +60,10 @@ public class RecordBean {
         return month;
     }
 
+    public int getDay() {
+        return day;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

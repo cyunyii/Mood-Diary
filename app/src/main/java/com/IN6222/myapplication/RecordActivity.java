@@ -3,9 +3,7 @@ package com.IN6222.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -13,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.IN6222.myapplication.RecordPage.GridViewAdapter;
+import com.IN6222.myapplication.Adapter.GridViewAdapter;
 import com.IN6222.myapplication.bean.RecordBean;
 import com.IN6222.myapplication.db.DBManager;
 import com.IN6222.myapplication.bean.MoodType;
 import com.IN6222.myapplication.utils.SelectTimeDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

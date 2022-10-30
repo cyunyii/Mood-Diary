@@ -1,4 +1,4 @@
-package com.IN6222.myapplication.RecordPage;
+package com.IN6222.myapplication.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
