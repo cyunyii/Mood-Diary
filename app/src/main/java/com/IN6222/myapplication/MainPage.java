@@ -37,6 +37,7 @@ public class MainPage extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        System.out.println("$$$$$$$$$$$$$$$$$$$$ð");
         loadDataBase();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

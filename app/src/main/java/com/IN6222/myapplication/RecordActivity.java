@@ -37,7 +37,6 @@ public class RecordActivity extends AppCompatActivity {
     RecordBean recordBean;
     FloatingActionButton saveButton;
 
-
     String time;
 
     //recordBean.id (use to update)
@@ -63,20 +62,24 @@ public class RecordActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         if(intent!=null){
+
             RecordBean bean=(RecordBean) intent.getSerializableExtra("bean");
             if(bean!=null){
+                System.out.println("55555555555555555555555555555555555");
+                System.out.println("i am bean， and i am not null");
                 this.recordBean=bean;
                 restoreDetail();
+                firstTimeSave=false;
             }
-            firstTimeSave=false;
+            else {
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                time = sdf.format(date);
+                recordTime.setText(time);
+                initBean();
+            }
         }
-        else {
-            Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-            time = sdf.format(date);
-            recordTime.setText(time);
-            initBean();
-        }
+
 
 
 
