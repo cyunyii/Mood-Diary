@@ -56,7 +56,7 @@ public class SelectTimeDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 int year=datePicker.getYear();
-                int month=datePicker.getMonth();
+                int month=datePicker.getMonth()+1;
                 int day=datePicker.getDayOfMonth();
                 System.out.println(year);
                 System.out.println(month);

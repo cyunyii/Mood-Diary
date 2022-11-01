@@ -15,6 +15,12 @@
         android:theme="@style/Theme.MoodDiary"
         tools:targetApi="31">
         <activity
+            android:name=".searchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NavigationPage"
+            android:exported="false" />
+        <activity
             android:name=".RecordActivity"
             android:exported="false" />
         <activity

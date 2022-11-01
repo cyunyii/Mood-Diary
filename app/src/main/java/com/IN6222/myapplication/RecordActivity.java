@@ -154,7 +154,7 @@ public class RecordActivity extends AppCompatActivity {
 
         Calendar calendar=Calendar.getInstance();
         recordBean.setYear(calendar.get(Calendar.YEAR));
-        recordBean.setMonth(calendar.get(Calendar.MONTH));
+        recordBean.setMonth(calendar.get(Calendar.MONTH)+1);
         recordBean.setDay(calendar.get(Calendar.DAY_OF_MONTH));
 
 

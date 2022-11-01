@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NavigationPage">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:layout_marginTop="10dp"
+            android:id="@+id/navi_home"
+            style="@style/radiobutton_style"
+            android:drawable="@drawable/home"
+            android:gravity="center"
+            android:textSize="14sp"/>
+
+        <RadioButton
+            android:layout_marginTop="10dp"
+            android:id="@+id/navi_visual"
+            style="@style/radiobutton_style"
+            android:drawableTop="@drawable/visualization"
+            android:textSize="14sp"/>
+
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/div_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_above="@id/radio_group"
+        android:background="@color/white" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/navi_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/div_tab_bar"/>
+
+</RelativeLayout>
+
+
+
