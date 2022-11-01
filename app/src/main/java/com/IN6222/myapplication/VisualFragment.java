@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.IN6222.myapplication.bean.chartBean;
 import com.IN6222.myapplication.db.DBManager;
@@ -47,6 +48,7 @@ public class VisualFragment extends Fragment {
 
     PieChart pieChart;
     BarChart barChart;
+    ImageView chooseTime;
     List<PieEntry> datalist;
     List<BarEntry> bardataList;
     List<String> moodTypes;
@@ -99,9 +101,17 @@ public class VisualFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_visual, container, false);
         pieChart=view.findViewById(R.id.viusal_piechart);
         barChart=view.findViewById(R.id.visual_barchart);
+        chooseTime=view.findViewById(R.id.visual_calendar);
         datalist=new ArrayList<>();
         bardataList=new ArrayList<>();
         moodTypes=new ArrayList<>();
+
+        chooseTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return view;
     }
 
@@ -181,7 +191,7 @@ public class VisualFragment extends Fragment {
         barChart.getDescription().setEnabled(false);
         barChart.getAxisRight().setEnabled(false);
         barChart.animateY(1500);
-        barChart.setExtraOffsets(24f, 10f, 24f, 15f);
+        barChart.setExtraOffsets(18f, 10f, 18f, 15f);
         barDataSet.setDrawValues(false);
 
         Legend legend=barChart.getLegend();
