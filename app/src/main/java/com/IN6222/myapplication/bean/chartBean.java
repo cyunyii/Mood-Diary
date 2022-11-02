@@ -1,22 +1,15 @@
 package com.IN6222.myapplication.bean;
 
 public class chartBean {
-    public chartBean(String moodType, int count, float percentage) {
+
+    String MoodType;
+    int count;
+    int imgId;
+
+    public chartBean(String moodType, int count, int imgId) {
         MoodType = moodType;
         this.count = count;
-        this.percentage = percentage;
-    }
-
-    public void setMoodType(String moodType) {
-        MoodType = moodType;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public void setPercentage(float percentage) {
-        this.percentage = percentage;
+        this.imgId = imgId;
     }
 
     public String getMoodType() {
@@ -27,11 +20,20 @@ public class chartBean {
         return count;
     }
 
-    public float getPercentage() {
-        return percentage;
+
+    public int getImgId() {
+        return imgId;
     }
 
-    String MoodType;
-    int count;
-    float percentage;
+    public void setMoodType(String moodType) {
+        MoodType = moodType;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setImgId(int imgId) {
+        this.imgId = imgId;
+    }
 }

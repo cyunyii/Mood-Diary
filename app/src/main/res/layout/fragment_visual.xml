@@ -48,7 +48,8 @@
                 android:layout_marginTop="10dp"></ImageView>
 
             <TextView
-                android:layout_width="50dp"
+                android:id="@+id/visual_themeStr"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/visual_img"
                 android:layout_centerHorizontal="true"

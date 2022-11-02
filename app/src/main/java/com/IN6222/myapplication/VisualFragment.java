@@ -1,5 +1,8 @@
 package com.IN6222.myapplication;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.IN6222.myapplication.bean.chartBean;
 import com.IN6222.myapplication.db.DBManager;
@@ -33,6 +38,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,9 +56,17 @@ public class VisualFragment extends Fragment {
     PieChart pieChart;
     BarChart barChart;
     ImageView chooseTime;
+    TextView moodTheme;
+    ImageView ThemeImg;
+
     List<PieEntry> datalist;
     List<BarEntry> bardataList;
     List<String> moodTypes;
+    DatePickerDialog datePickerDialog;
+    int year,month,day;
+
+    String mostMood;
+    int ImgID;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -102,34 +117,86 @@ public class VisualFragment extends Fragment {
         pieChart=view.findViewById(R.id.viusal_piechart);
         barChart=view.findViewById(R.id.visual_barchart);
         chooseTime=view.findViewById(R.id.visual_calendar);
+        moodTheme=view.findViewById(R.id.visual_themeStr);
+        ThemeImg=view.findViewById(R.id.visual_img);
+
         datalist=new ArrayList<>();
         bardataList=new ArrayList<>();
         moodTypes=new ArrayList<>();
 
+
+        Calendar calendar=Calendar.getInstance();
+        year=calendar.get(Calendar.YEAR);
+        month=calendar.get(Calendar.MONTH)+1;
+        day=calendar.get(Calendar.DAY_OF_MONTH);
         chooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                datePickerDialog = new DatePickerDialog(getContext(),DatePickerDialog.THEME_HOLO_LIGHT,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year1, int month1, int dayOfMonth1) {
+                                    year=year1;
+                                    month=month1+1;
+                                    day=dayOfMonth1;
+                                    setData();
+                                    if(datalist.size()==0){
+                                        NodataDialog();
+                                    }
+                                    setHeader();
+                                    pieChart.notifyDataSetChanged();
+                                    pieChart.invalidate();
+                                    barChart.notifyDataSetChanged();
+                                    barChart.invalidate();
+                            }
+                        },
+                        year, month-1, day);
 
+                //hide day (doesn't work)
+                DatePicker dp = findDatePicker((ViewGroup) datePickerDialog.getWindow().getDecorView());
+                if(dp!=null){
+                    ((ViewGroup) ((ViewGroup) dp.getChildAt(0)).getChildAt(0))
+                            .getChildAt(1).setVisibility(View.GONE);//.getChildAt(0)
+                }
+
+                datePickerDialog.show();
             }
         });
         return view;
+    }
+
+    private void NodataDialog() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        builder.setTitle("Alert").setMessage("No data available in this month")
+                .setNegativeButton("OK",null);
+        builder.create().show();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
+        setData();
+
+        setHeader();
+        drawPie();
+        drawbar();
+
+
+    }
+
+    private void setHeader() {
+        moodTheme.setText(mostMood);
+        ThemeImg.setImageResource(ImgID);
+    }
+
+    private void setData() {
+
         datalist.clear();
         bardataList.clear();
         moodTypes.clear();
 
-        Calendar calendar=Calendar.getInstance();
-        int year=calendar.get(Calendar.YEAR);
-        int month=calendar.get(Calendar.MONTH)+1;
-
-
-        System.out.println(month);
-        System.out.println(year);
+        int maxcount=-1;
 
         List<chartBean> res= DBManager.searchByType(month,year);
         Log.d("resSize", ""+res.size());
@@ -143,29 +210,30 @@ public class VisualFragment extends Fragment {
             datalist.add(new PieEntry(temp.getCount(),temp.getMoodType()));
             bardataList.add(new BarEntry((float) i,(float) temp.getCount()));
             moodTypes.add(temp.getMoodType());
+            if(temp.getCount()>maxcount){
+                maxcount=temp.getCount();
+                mostMood=temp.getMoodType();
+                ImgID=temp.getImgId();
+            }
 
         }
-
-        drawPie();
-        drawbar();
-
-
     }
 
     private void drawPie() {
 
         PieDataSet pieDataSet=new PieDataSet(datalist,"");
         pieDataSet.setDrawValues(true);
-        pieDataSet.setValueTextSize(16);
+        pieDataSet.setValueTextSize(14);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueFormatter(new PercentFormatter());
         pieDataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         pieDataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
-        pieChart.animateXY(2000,2000);
+        pieChart.animateXY(1500,1500);
         PieData data=new PieData(pieDataSet);
         pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
 
+        pieChart.setNoDataText("No data available");
         pieChart.setData(data);
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
@@ -215,4 +283,24 @@ public class VisualFragment extends Fragment {
 
 
     }
+
+
+    private DatePicker findDatePicker(ViewGroup group) {
+        if (group != null) {
+            for (int i = 0, j = group.getChildCount(); i < j; i++) {
+                View child = group.getChildAt(i);
+                if (child instanceof DatePicker) {
+                    return (DatePicker) child;
+                } else if (child instanceof ViewGroup) {
+                    DatePicker result = findDatePicker((ViewGroup) child);
+                    if (result != null)
+                        return result;
+                }
+            }
+        }
+        return null;
+    }
+
+
+
 }

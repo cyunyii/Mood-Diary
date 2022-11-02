@@ -180,16 +180,17 @@ public class DBManager {
         List<chartBean> list=new ArrayList<>();
 
         Log.d(TAG, "searchByType");
-        int count=searchCount(month, year);
-        String sql="select mood,count(*) from record where month=? and year=? group by mood";
+
+        String sql="select mood,count(*),imgId from record where month=? and year=? group by mood";
         Cursor cursor=db.rawQuery(sql,new String[]{""+month,""+year});
         while(cursor.moveToNext()){
             String mood=cursor.getString(cursor.getColumnIndexOrThrow("mood"));
             int typeCount=cursor.getInt(cursor.getColumnIndexOrThrow("count(*)"));
+            int imgId=cursor.getInt(cursor.getColumnIndexOrThrow("imgId"));
+
             System.out.println("********************type search*********************");
             System.out.println(""+mood+typeCount);
-            float per=(float)typeCount/count;
-            chartBean bean=new chartBean(mood,typeCount,per);
+            chartBean bean=new chartBean(mood,typeCount,imgId);
             list.add(bean);
         }
         cursor.close();

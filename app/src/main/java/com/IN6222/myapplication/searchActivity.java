@@ -2,9 +2,14 @@ package com.IN6222.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +40,40 @@ public class searchActivity extends AppCompatActivity {
         adapter=new RecordItemAdapter(this,datas);
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                RecordBean recordBean=datas.get(i);
+                Intent intent=new Intent(searchActivity.this,RecordActivity.class);
+                intent.putExtra("bean",recordBean);
+                startActivity(intent);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                RecordBean clickbean=datas.get(i);
+                DeleteDialog(clickbean);
+                return true;
+            }
+        });
+
+    }
+
+
+    private void DeleteDialog(RecordBean bean) {
+        AlertDialog.Builder builder=new AlertDialog.Builder(searchActivity.this);
+        builder.setTitle("Alert").setMessage("Are you sure to delete this record?")
+                .setNegativeButton("cancel",null)
+                .setPositiveButton("delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DBManager.deleteRecoredById(bean.getId());
+                        datas.remove(bean);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+        builder.create().show();
     }
 
     public void onClick(View view) {

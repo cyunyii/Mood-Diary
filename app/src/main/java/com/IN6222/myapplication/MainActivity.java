@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,13 +38,11 @@ public class MainActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String userMail=mail.getText().toString();
-//                String userPassword=password.getText().toString();
-//
-//                signInFirebase(userMail,userPassword);
-//                Intent intent=new Intent(MainActivity.this,MainPage.class);
-                Intent intent=new Intent(MainActivity.this,NavigationPage.class);
-                startActivity(intent);
+                String userMail=mail.getText().toString();
+                String userPassword=password.getText().toString();
+
+                signInFirebase(userMail,userPassword);
+
             }
         });
 
@@ -64,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
+                            Intent intent=new Intent(MainActivity.this,NavigationPage.class);
+                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity.this,"Username or password is invalid.",Toast.LENGTH_LONG).show();
                         }
                     }
                 });
