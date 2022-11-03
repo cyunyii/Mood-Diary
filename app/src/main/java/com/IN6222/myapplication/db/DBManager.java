@@ -116,8 +116,8 @@ public class DBManager {
             int year=cursor.getInt(cursor.getColumnIndexOrThrow("year"));
             int month=cursor.getInt(cursor.getColumnIndexOrThrow("month"));
             int day=cursor.getInt(cursor.getColumnIndexOrThrow("day"));
-            System.out.println("*****************************************");
-            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
+//            System.out.println("*****************************************");
+//            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
             RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
             list.add(bean);
         }
@@ -150,8 +150,8 @@ public class DBManager {
             int year=cursor.getInt(cursor.getColumnIndexOrThrow("year"));
             int month=cursor.getInt(cursor.getColumnIndexOrThrow("month"));
             int day=cursor.getInt(cursor.getColumnIndexOrThrow("day"));
-            System.out.println("********************blur search*********************");
-            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
+//            System.out.println("********************blur search*********************");
+//            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
             RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
             list.add(bean);
         }
@@ -190,13 +190,34 @@ public class DBManager {
             int typeCount=cursor.getInt(cursor.getColumnIndexOrThrow("count(*)"));
             int imgId=cursor.getInt(cursor.getColumnIndexOrThrow("imgId"));
 
-            System.out.println("********************type search*********************");
-            System.out.println(""+mood+typeCount);
+//            System.out.println("********************type search*********************");
+//            System.out.println(""+mood+typeCount);
             chartBean bean=new chartBean(mood,typeCount,imgId);
             list.add(bean);
         }
         cursor.close();
 
         return list;
+    }
+
+    public static List<RecordBean> searchByTime(String uid,int year, int month, int day) {
+        List<RecordBean> list=new ArrayList<>();
+        String str= "SELECT  * FROM record where uid=? and year=? and month=? and day=?";
+        Cursor cursor=db.rawQuery(str,new String[]{uid,""+year,""+month,""+day});
+        while(cursor.moveToNext()){
+            int id= cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String mood=cursor.getString(cursor.getColumnIndexOrThrow("mood"));
+            int imgId=cursor.getInt(cursor.getColumnIndexOrThrow("imgId"));
+            String title=cursor.getString(cursor.getColumnIndexOrThrow("title"));
+            String content=cursor.getString(cursor.getColumnIndexOrThrow("content"));
+            String date=cursor.getString(cursor.getColumnIndexOrThrow("date"));
+//            System.out.println("********************blur search*********************");
+//            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
+            RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
+            list.add(bean);
+        }
+        cursor.close();
+        return list;
+
     }
 }

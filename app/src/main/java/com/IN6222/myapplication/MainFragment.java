@@ -1,6 +1,7 @@
 package com.IN6222.myapplication;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -29,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -44,9 +47,12 @@ public class MainFragment extends BaseFragment {
     List<RecordBean> recordList;
     RecordItemAdapter adapter;
     FloatingActionButton fab;
-    ImageView search;
+    ImageView search,timepicker;
+    DatePickerDialog datePickerDialog;
     FirebaseUser user;
     private String uid;
+
+    int year,month,day;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +91,7 @@ public class MainFragment extends BaseFragment {
         listView = view.findViewById(R.id.main_lv);
         fab=view.findViewById(R.id.fab);
         search=view.findViewById(R.id.main_search);
+        timepicker=view.findViewById(R.id.main_calendar);
 
         recordList = new ArrayList<>();
         adapter = new RecordItemAdapter(getContext(), recordList);
@@ -129,6 +136,34 @@ public class MainFragment extends BaseFragment {
             }
         });
 
+        Calendar calendar=Calendar.getInstance();
+        year=calendar.get(Calendar.YEAR);
+        month=calendar.get(Calendar.MONTH)+1;
+        day=calendar.get(Calendar.DAY_OF_MONTH);
+
+       timepicker.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+
+               datePickerDialog=new DatePickerDialog(getContext(), DatePickerDialog.THEME_HOLO_LIGHT,
+                       new DatePickerDialog.OnDateSetListener() {
+                           @Override
+                           public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                               year=i;
+                               month=i1+1;
+                               day=i2;
+                               List<RecordBean> list=DBManager.searchByTime(uid,year,month,day);
+                               recordList.clear();
+                               recordList.addAll(list);
+                               System.out.println(recordList.size());
+                               adapter.notifyDataSetChanged();
+                           }
+                       },year,month-1,day);
+
+
+               datePickerDialog.show();
+           }
+       });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,8 +173,6 @@ public class MainFragment extends BaseFragment {
         });
 
     }
-
-
 
     private void DeleteDialog(RecordBean bean) {
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());

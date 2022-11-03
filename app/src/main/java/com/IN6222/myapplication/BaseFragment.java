@@ -79,11 +79,12 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
         Log.d(TAG, getClass().getSimpleName() + "  onResume");
 
+        dispatchVisibleEvent();
         //页面从其他Activity返回时，重新加载被释放的资源
-        if(isLayoutInitialized && isInVisibleRelease){
-            dispatchVisibleEvent();
-            isInVisibleRelease = false;
-        }
+//        if(isLayoutInitialized && isInVisibleRelease){
+//            dispatchVisibleEvent();
+//            isInVisibleRelease = false;
+//        }
     }
 
     @Override
