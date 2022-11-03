@@ -24,8 +24,6 @@ public abstract class BaseFragment extends Fragment {
 
     //布局是否初始化完成
     private boolean isLayoutInitialized = false;
-    //懒加载完成
-    private boolean isLazyLoadFinished = false;
     //记录页面可见性
     private boolean isVisibleToUser = false;
     //不可见时释放部分资源
@@ -82,9 +80,8 @@ public abstract class BaseFragment extends Fragment {
         Log.d(TAG, getClass().getSimpleName() + "  onResume");
 
         //页面从其他Activity返回时，重新加载被释放的资源
-        if(isLazyLoadFinished && isLayoutInitialized && isInVisibleRelease){
-//            visibleReLoad();
-
+        if(isLayoutInitialized && isInVisibleRelease){
+            dispatchVisibleEvent();
             isInVisibleRelease = false;
         }
     }
@@ -95,7 +92,7 @@ public abstract class BaseFragment extends Fragment {
         Log.d(TAG, getClass().getSimpleName() + "  onPause");
 
         //当从Fragment切换到其他Activity释放部分资源
-        if(isLazyLoadFinished && isVisibleToUser){
+        if(isVisibleToUser){
             //页面从可见切换到不可见时触发，可以释放部分资源，配合reload方法再次进入页面时加载
 //            inVisibleRelease();
 
@@ -111,7 +108,6 @@ public abstract class BaseFragment extends Fragment {
         //重置所有数据
         this.view = null;
         isLayoutInitialized = false;
-        isLazyLoadFinished = false;
         isVisibleToUser = false;
         isInVisibleRelease = false;
     }
@@ -129,12 +125,11 @@ public abstract class BaseFragment extends Fragment {
      */
     private void dispatchVisibleEvent(){
         Log.d(TAG, getClass().getSimpleName() + "  dispatchVisibleEvent isVisibleToUser = " + getUserVisibleHint()
-                + " --- isLayoutInitialized = " + isLayoutInitialized + " --- isLazyLoadFinished = " + isLazyLoadFinished);
+                + " --- isLayoutInitialized = " + isLayoutInitialized );
 
         if(getUserVisibleHint() && isLayoutInitialized){
             lazyLoad();
         }
-
         //处理完可见性事件之后修改isVisibleToUser状态
         this.isVisibleToUser = getUserVisibleHint();
     }

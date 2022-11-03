@@ -24,6 +24,7 @@ import com.IN6222.myapplication.bean.chartBean;
 import com.IN6222.myapplication.db.DBManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -34,6 +35,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -134,19 +136,20 @@ public class VisualFragment extends BaseFragment {
                             @Override
                             public void onDateSet(DatePicker view, int year1, int month1, int dayOfMonth1) {
 
+                                barChart.clear();
+                                pieChart.clear();
                                 year=year1;
                                 month=month1+1;
                                 day=dayOfMonth1;
                                 setData();
-
                                 if(datalist.size()==0){
                                     NodataDialog();
                                 }
                                 setHeader();
-                                pieChart.notifyDataSetChanged();
-                                pieChart.invalidate();
-                                barChart.notifyDataSetChanged();
-                                barChart.invalidate();
+
+                                drawbar();
+                                drawPie();
+
                             }
                         },
                         year, month-1, day);
@@ -288,6 +291,9 @@ public class VisualFragment extends BaseFragment {
         xAxis.setLabelCount(moodTypes.size());
 
         xAxis.setValueFormatter(new IndexAxisValueFormatter(moodTypes));
+
+
+
         xAxis.setDrawGridLines(false);
         xAxis.setLabelRotationAngle(-20f);
 
@@ -297,7 +303,6 @@ public class VisualFragment extends BaseFragment {
         YAxis rightYAxis = barChart.getAxisRight();
         rightYAxis.setEnabled(false);
         data.setBarWidth(0.8f);
-
 
     }
 

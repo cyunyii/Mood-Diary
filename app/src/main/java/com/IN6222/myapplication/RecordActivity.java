@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -101,9 +102,15 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String RecordTitle=title.getText().toString();
-//                System.out.println("***");
-//                System.out.println(RecordTitle);
                 String RecordContent=content.getText().toString();
+                if(TextUtils.isEmpty(RecordTitle)) {
+                    Toast.makeText(RecordActivity.this, "Please input title", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(RecordContent)) {
+                    Toast.makeText(RecordActivity.this, "Please input Ccontent", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 recordBean.setTitle(RecordTitle);
                 recordBean.setContent(RecordContent);
                 if(firstTimeSave){

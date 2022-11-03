@@ -138,8 +138,8 @@ public class DBManager {
      */
     public static List<RecordBean> searchRecordByKeywords(String keyword,String uid){
         List<RecordBean> list=new ArrayList<>();
-        String str= "SELECT  * FROM record where uid="+uid+" and title like '%"+keyword+"%' or content like '%"+keyword+"%' order by id desc";
-        Cursor cursor=db.rawQuery(str,null);
+        String str= "SELECT  * FROM record where uid=? and title like '%"+keyword+"%' or content like '%"+keyword+"%' order by id desc";
+        Cursor cursor=db.rawQuery(str,new String[]{uid});
         while(cursor.moveToNext()){
             int id= cursor.getInt(cursor.getColumnIndexOrThrow("id"));
             String mood=cursor.getString(cursor.getColumnIndexOrThrow("mood"));

@@ -96,6 +96,9 @@ public class searchActivity extends AppCompatActivity {
                 List<RecordBean> list= DBManager.searchRecordByKeywords(keyword,uid);
                 if(list.size()==0){
                     Toast.makeText(this,"No records found",Toast.LENGTH_SHORT).show();
+                    datas.clear();
+                    datas.addAll(list);
+                    adapter.notifyDataSetChanged();
                 }else{
                     datas.clear();
                     datas.addAll(list);
