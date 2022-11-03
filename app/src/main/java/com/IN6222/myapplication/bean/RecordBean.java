@@ -6,6 +6,7 @@ public class RecordBean implements Serializable {
     private static final long serialVersionUID=1L;
 
     int id;
+    String uid;
     String mood;
     int imgId;
     String title;
@@ -20,20 +21,53 @@ public class RecordBean implements Serializable {
     public RecordBean() {
     }
 
-    public RecordBean(int id, String mood, int imgId, String title, String content, String date, int year, int month,int day) {
+    public void setId(int id) {
         this.id = id;
-        this.mood = mood;
-        this.imgId = imgId;
-        this.title = title;
-        this.content = content;
-        this.date = date;
-        this.year = year;
-        this.month = month;
-        this.day=day;
     }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setMood(String mood) {
+        this.mood = mood;
+    }
+
+    public void setImgId(int imgId) {
+        this.imgId = imgId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
 
     public int getId() {
         return id;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public String getMood() {
@@ -68,39 +102,18 @@ public class RecordBean implements Serializable {
         return day;
     }
 
-    public void setId(int id) {
+
+
+    public RecordBean(int id, String uid, String mood, int imgId, String title, String content, String date, int year, int month, int day) {
         this.id = id;
-    }
-
-    public void setMood(String mood) {
+        this.uid = uid;
         this.mood = mood;
-    }
-
-    public void setImgId(int imgId) {
         this.imgId = imgId;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setDate(String date) {
         this.date = date;
-    }
-
-    public void setYear(int year) {
         this.year = year;
-    }
-
-    public void setMonth(int month) {
         this.month = month;
-    }
-
-    public void setDay(int day) {
         this.day = day;
     }
 }

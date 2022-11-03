@@ -45,6 +45,7 @@ public class DBManager {
 
     /**
      *     int id;
+     *     String uid;
      *     String mood;
      *     int imgId;
      *     String title;
@@ -59,6 +60,7 @@ public class DBManager {
 
         ContentValues values=new ContentValues();
         values.put("mood",recordBean.getMood());
+        values.put("uid",recordBean.getUid());
         values.put("imgId",recordBean.getImgId());
         values.put("title",recordBean.getTitle());
         values.put("content",recordBean.getContent());
@@ -75,6 +77,7 @@ public class DBManager {
     public static void updateRecord(RecordBean recordBean){
         ContentValues values=new ContentValues();
         values.put("id",recordBean.getId());
+        values.put("uid",recordBean.getUid());
         values.put("mood",recordBean.getMood());
         values.put("imgId",recordBean.getImgId());
         values.put("title",recordBean.getTitle());
@@ -99,10 +102,10 @@ public class DBManager {
      *     int month;
      *     int day;
      */
-    public static List<RecordBean> searchAllRecords(){
+    public static List<RecordBean> searchAllRecords(String uid){
         List<RecordBean> list=new ArrayList<>();
-        String sql="select * from record order by id desc";
-        Cursor cursor=db.rawQuery(sql,new String[]{});
+        String sql="select * from record where uid=? order by id desc";
+        Cursor cursor=db.rawQuery(sql,new String[]{uid});
         while(cursor.moveToNext()){
             int id= cursor.getInt(cursor.getColumnIndexOrThrow("id"));
             String mood=cursor.getString(cursor.getColumnIndexOrThrow("mood"));
@@ -115,7 +118,7 @@ public class DBManager {
             int day=cursor.getInt(cursor.getColumnIndexOrThrow("day"));
             System.out.println("*****************************************");
             System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
-            RecordBean bean=new RecordBean(id,mood,imgId,title,content,date,year,month,day);
+            RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
             list.add(bean);
         }
         return list;
@@ -133,10 +136,9 @@ public class DBManager {
     /**
      * search records by keywords
      */
-    public static List<RecordBean> searchRecordByKeywords(String keyword){
+    public static List<RecordBean> searchRecordByKeywords(String keyword,String uid){
         List<RecordBean> list=new ArrayList<>();
-        String sql="select * from record where title like '%'"+keyword+"'%' or content like '%'"+keyword+"'%' order by id desc";
-        String str= "SELECT  * FROM record where title like '%"+keyword+"%' or content like '%"+keyword+"%' order by id desc";
+        String str= "SELECT  * FROM record where uid="+uid+" and title like '%"+keyword+"%' or content like '%"+keyword+"%' order by id desc";
         Cursor cursor=db.rawQuery(str,null);
         while(cursor.moveToNext()){
             int id= cursor.getInt(cursor.getColumnIndexOrThrow("id"));
@@ -150,7 +152,7 @@ public class DBManager {
             int day=cursor.getInt(cursor.getColumnIndexOrThrow("day"));
             System.out.println("********************blur search*********************");
             System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
-            RecordBean bean=new RecordBean(id,mood,imgId,title,content,date,year,month,day);
+            RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
             list.add(bean);
         }
         cursor.close();
@@ -164,9 +166,9 @@ public class DBManager {
      * @param year
      * @return
      */
-    public static int searchCount(int month,int year){
-        String sql="select count(*) from record where month=? and year=?";
-        Cursor cursor=db.rawQuery(sql,new String[]{""+month,""+year});
+    public static int searchCount(int month,int year,String uid){
+        String sql="select count(*) from record where month=? and year=? and uid=?";
+        Cursor cursor=db.rawQuery(sql,new String[]{""+month,""+year,uid});
 
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(cursor.getColumnIndexOrThrow("count(*)"));
@@ -176,13 +178,13 @@ public class DBManager {
 
     }
 
-    public static List<chartBean> searchByType(int month, int year) {
+    public static List<chartBean> searchByType(int month, int year,String uid) {
         List<chartBean> list=new ArrayList<>();
 
         Log.d(TAG, "searchByType");
 
-        String sql="select mood,count(*),imgId from record where month=? and year=? group by mood";
-        Cursor cursor=db.rawQuery(sql,new String[]{""+month,""+year});
+        String sql="select mood,count(*),imgId from record where month=? and year=? and uid=? group by mood";
+        Cursor cursor=db.rawQuery(sql,new String[]{""+month,""+year,uid});
         while(cursor.moveToNext()){
             String mood=cursor.getString(cursor.getColumnIndexOrThrow("mood"));
             int typeCount=cursor.getInt(cursor.getColumnIndexOrThrow("count(*)"));

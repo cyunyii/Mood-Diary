@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import com.IN6222.myapplication.db.DBManager;
 import com.IN6222.myapplication.bean.MoodType;
 import com.IN6222.myapplication.utils.SelectTimeDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ public class RecordActivity extends AppCompatActivity {
     private GridViewAdapter adapter;
     RecordBean recordBean;
     FloatingActionButton saveButton;
+    private FirebaseUser user;
+    String uid;
 
     String time;
 
@@ -56,6 +61,9 @@ public class RecordActivity extends AppCompatActivity {
         saveButton=findViewById(R.id.fab_save);
         title=findViewById(R.id.record_Title);
         content=findViewById(R.id.record_content);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        uid=user.getUid();
 
         //load and fill gridview
         LoadMoodImg();
@@ -151,7 +159,8 @@ public class RecordActivity extends AppCompatActivity {
         recordBean.setDate(time);
         recordBean.setImgId(R.mipmap.happy);
         recordBean.setMood("Happy");
-
+        recordBean.setUid(uid);
+        Log.d("initBean", uid);
         Calendar calendar=Calendar.getInstance();
         recordBean.setYear(calendar.get(Calendar.YEAR));
         recordBean.setMonth(calendar.get(Calendar.MONTH)+1);

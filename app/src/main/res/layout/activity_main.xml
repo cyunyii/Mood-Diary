@@ -6,35 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="267dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="106dp"
-        android:layout_marginBottom="45dp"
-        android:ems="10"
-        android:hint="Please enter your email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <EditText-->
+<!--        android:id="@+id/editTextEmail"-->
+<!--        android:layout_width="267dp"-->
+<!--        android:layout_height="51dp"-->
+<!--        android:layout_marginTop="106dp"-->
+<!--        android:layout_marginBottom="45dp"-->
+<!--        android:ems="10"-->
+<!--        android:hint="Please enter your email"-->
+<!--        android:inputType="textEmailAddress"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.509"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="259dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="67dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginBottom="37dp"
-        android:ems="10"
-        android:hint="Please enter your password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSignin"
+<!--    <EditText-->
+<!--        android:id="@+id/editTextPassword"-->
+<!--        android:layout_width="259dp"-->
+<!--        android:layout_height="51dp"-->
+<!--        android:layout_marginStart="67dp"-->
+<!--        android:layout_marginEnd="67dp"-->
+<!--        android:layout_marginBottom="37dp"-->
+<!--        android:ems="10"-->
+<!--        android:hint="Please enter your password"-->
+<!--        android:inputType="textPassword"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/buttonSignin"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Welcome"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/buttonSignin"
+    ></TextView>
 
     <Button
         android:id="@+id/buttonSignin"
@@ -43,23 +56,23 @@
         android:layout_marginBottom="27dp"
         android:text="Sign In"
         android:backgroundTint="@color/green"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSignup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
-
-    <Button
-        android:id="@+id/buttonSignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="185dp"
-        android:text="Sign Up"
-        android:backgroundTint="@color/green"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignin" />
+       />
+
+<!--    <Button-->
+<!--        android:id="@+id/buttonSignup"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="185dp"-->
+<!--        android:text="Sign Up"-->
+<!--        android:backgroundTint="@color/green"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/buttonSignin" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

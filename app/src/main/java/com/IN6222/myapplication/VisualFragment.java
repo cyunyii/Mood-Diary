@@ -37,6 +37,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
@@ -64,6 +66,8 @@ public class VisualFragment extends Fragment {
     List<String> moodTypes;
     DatePickerDialog datePickerDialog;
     int year,month,day;
+    private FirebaseUser user;
+    String uid;
 
     String mostMood;
     int ImgID;
@@ -120,6 +124,9 @@ public class VisualFragment extends Fragment {
         moodTheme=view.findViewById(R.id.visual_themeStr);
         ThemeImg=view.findViewById(R.id.visual_img);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        uid=user.getUid();
+
         datalist=new ArrayList<>();
         bardataList=new ArrayList<>();
         moodTypes=new ArrayList<>();
@@ -129,6 +136,18 @@ public class VisualFragment extends Fragment {
         year=calendar.get(Calendar.YEAR);
         month=calendar.get(Calendar.MONTH)+1;
         day=calendar.get(Calendar.DAY_OF_MONTH);
+
+        setData();
+
+//        if(datalist.size()==0){
+//            NodataDialog();
+//        }
+
+        setHeader();
+        drawPie();
+        drawbar();
+
+
         chooseTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,18 +155,20 @@ public class VisualFragment extends Fragment {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year1, int month1, int dayOfMonth1) {
-                                    year=year1;
-                                    month=month1+1;
-                                    day=dayOfMonth1;
-                                    setData();
-                                    if(datalist.size()==0){
-                                        NodataDialog();
-                                    }
-                                    setHeader();
-                                    pieChart.notifyDataSetChanged();
-                                    pieChart.invalidate();
-                                    barChart.notifyDataSetChanged();
-                                    barChart.invalidate();
+
+                                year=year1;
+                                month=month1+1;
+                                day=dayOfMonth1;
+                                setData();
+
+                                if(datalist.size()==0){
+                                    NodataDialog();
+                                }
+                                setHeader();
+                                pieChart.notifyDataSetChanged();
+                                pieChart.invalidate();
+                                barChart.notifyDataSetChanged();
+                                barChart.invalidate();
                             }
                         },
                         year, month-1, day);
@@ -162,8 +183,10 @@ public class VisualFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
+
         return view;
     }
+
 
     private void NodataDialog() {
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
@@ -172,18 +195,7 @@ public class VisualFragment extends Fragment {
         builder.create().show();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-        setData();
-
-        setHeader();
-        drawPie();
-        drawbar();
-
-
-    }
 
     private void setHeader() {
         moodTheme.setText(mostMood);
@@ -198,7 +210,7 @@ public class VisualFragment extends Fragment {
 
         int maxcount=-1;
 
-        List<chartBean> res= DBManager.searchByType(month,year);
+        List<chartBean> res= DBManager.searchByType(month,year,uid);
         Log.d("resSize", ""+res.size());
         for(int i=0;i<res.size();i++){
 //            System.out.println("*************lalalalalalala**********");

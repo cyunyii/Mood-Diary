@@ -20,11 +20,12 @@ import java.util.List;
 
 public class NavigationPage extends AppCompatActivity implements View.OnClickListener,ViewPager.OnPageChangeListener{
 
-    RadioButton home,visual;
+    RadioButton home,visual,user;
     private ViewPager viewPager;
     private RadioGroup radioGroup;
     private MainFragment mainFragment;
     private VisualFragment visualFragment;
+    private LogOut logOut;
     private List<Fragment> list;
 
     @Override
@@ -35,6 +36,7 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
         //set radiobutton size
         home = (RadioButton) findViewById(R.id.navi_home);
         visual = (RadioButton) findViewById(R.id.navi_visual);
+        user=(RadioButton)findViewById(R.id.navi_user);
 
         Drawable drawableFirst = getResources().getDrawable(R.drawable.home);
         drawableFirst.setBounds(0, 0, 69, 69);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
@@ -43,6 +45,10 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
         Drawable drawableSec = getResources().getDrawable(R.drawable.visualization);
         drawableSec.setBounds(0, 0, 69, 69);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         visual.setCompoundDrawables(null, drawableSec, null, null);//只放上面
+
+        Drawable drawableThird = getResources().getDrawable(R.drawable.user);
+        drawableThird.setBounds(0, 0, 69, 69);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        user.setCompoundDrawables(null, drawableThird, null, null);//只放上面
 
 
 
@@ -59,12 +65,14 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
 
         mainFragment = new MainFragment();
         visualFragment =new VisualFragment();
+        logOut=new LogOut();
 
 
         //add fragment to list
         list = new ArrayList<>();
         list.add(mainFragment);
         list.add(visualFragment);
+        list.add(logOut);
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),list);
         viewPager.setAdapter(adapter);
@@ -76,6 +84,7 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
 
         home.setOnClickListener(this);
         visual.setOnClickListener(this);
+        user.setOnClickListener(this);
 
         viewPager.addOnPageChangeListener(this);
 
@@ -98,6 +107,9 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.navi_visual:
                 viewPager.setCurrentItem(1,true);
+                break;
+            case R.id.navi_user:
+                viewPager.setCurrentItem(2,true);
                 break;
             default:
                 break;
@@ -122,6 +134,9 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
                 break;
             case 1:
                 radioGroup.check(R.id.navi_visual);
+                break;
+            case 2:
+                radioGroup.check(R.id.navi_user);
                 break;
             default:
                 break;

@@ -28,6 +28,13 @@
             android:drawableTop="@drawable/visualization"
             android:textSize="14sp"/>
 
+        <RadioButton
+            android:layout_marginTop="10dp"
+            android:id="@+id/navi_user"
+            style="@style/radiobutton_style"
+            android:drawableTop="@drawable/user"
+            android:textSize="14sp"/>
+
 
     </RadioGroup>
 

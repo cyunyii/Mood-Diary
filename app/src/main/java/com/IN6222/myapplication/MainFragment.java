@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import com.IN6222.myapplication.bean.MoodType;
 import com.IN6222.myapplication.bean.RecordBean;
 import com.IN6222.myapplication.db.DBManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,8 @@ public class MainFragment extends Fragment {
     RecordItemAdapter adapter;
     FloatingActionButton fab;
     ImageView search;
-
+    FirebaseUser user;
+    private String uid;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,6 +102,10 @@ public class MainFragment extends Fragment {
         adapter = new RecordItemAdapter(getContext(), recordList);
         listView.setAdapter(adapter);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        uid=user.getUid();
+        Log.d("user", uid);
 
         return view;
     }
@@ -161,7 +169,8 @@ public class MainFragment extends Fragment {
     }
 
     private void loadDataBase() {
-        List<RecordBean> list= DBManager.searchAllRecords();
+        List<RecordBean> list= DBManager.searchAllRecords(uid);
+        Log.d("MainFragmentData", uid+list.size());
         recordList.clear();
         recordList.addAll(list);
         adapter.notifyDataSetChanged();

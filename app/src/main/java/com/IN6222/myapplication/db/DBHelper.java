@@ -39,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
          *     int month;
          *     int day;
          */
-        String RecordSql="create table record(id integer primary key autoincrement,mood varchar(10),imgId integer,title varchar(20),content varchar(65535)," +
+        String RecordSql="create table record(id integer primary key autoincrement,mood varchar(10),uid varchar(200), imgId integer,title varchar(20),content varchar(65535)," +
                 "date varchar(20), year integer, month integer, day integer)";
         sqLiteDatabase.execSQL(RecordSql);
 
