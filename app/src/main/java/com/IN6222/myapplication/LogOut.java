@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * Use the {@link LogOut#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LogOut extends Fragment{
+public class LogOut extends BaseFragment{
 
     Button logout_btn;
 
@@ -67,12 +67,19 @@ public class LogOut extends Fragment{
         }
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_log_out, container, false);
+    protected void initView() {
         logout_btn=view.findViewById(R.id.button_logOut);
+    }
+
+    @Override
+    protected int initLayout() {
+        return R.layout.fragment_log_out;
+    }
+
+    @Override
+    protected void lazyLoad() {
         logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,8 +90,7 @@ public class LogOut extends Fragment{
                 startActivity(i);
             }
         });
-         return view;
-        }
+    }
 
 
 }

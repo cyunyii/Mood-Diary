@@ -124,18 +124,18 @@ public class MainActivity extends AppCompatActivity {
 
                 // checking if the user
                 // is null or not.
-                if (user != null) {
-
-                    System.out.println("I am a user. I am already login in");
-                    // if the user is already authenticated then we will
-                    // redirect our user to next screen which is our home screen.
-                    // we are redirecting to new screen via an intent.
-                    Intent i = new Intent(MainActivity.this, NavigationPage.class);
-                    startActivity(i);
-                    // we are calling finish method to kill or
-                    // mainactivity which is displaying our login ui.
-                    finish();
-                } else {
+//                if (user != null) {
+//
+//                    System.out.println("I am a user. I am already login in");
+//                    // if the user is already authenticated then we will
+//                    // redirect our user to next screen which is our home screen.
+//                    // we are redirecting to new screen via an intent.
+//                    Intent i = new Intent(MainActivity.this, NavigationPage.class);
+//                    startActivity(i);
+//                    // we are calling finish method to kill or
+//                    // mainactivity which is displaying our login ui.
+//                    finish();
+//                } else {
                     // this method is called when our
                     // user is not authenticated previously.
                     startActivityForResult(
@@ -172,9 +172,11 @@ public class MainActivity extends AppCompatActivity {
                             // integer which is declared above.
                             RC_SIGN_IN
                     );
+//                    finish();
                 }
-            }
         };
+
+
     }
 
     @Override
@@ -182,13 +184,20 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         // we are calling our auth
         // listener method on app resume.
-        signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFirebaseAuth.addAuthStateListener(mAuthStateListner);
-            }
-        });
+        if(mFirebaseAuth.getCurrentUser()!=null){
+            Intent i = new Intent(MainActivity.this, NavigationPage.class);
+            startActivity(i);
+            finish();
+        }
+        else {
+            signIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mFirebaseAuth.addAuthStateListener(mAuthStateListner);
 
+                }
+            });
+        }
     }
 
     @Override

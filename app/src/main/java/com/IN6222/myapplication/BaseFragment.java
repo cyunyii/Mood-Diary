@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,71 +17,148 @@ import android.view.ViewGroup;
  */
 public abstract class BaseFragment extends Fragment {
 
-    //Fragment view is successfully loaded
-    private boolean isViewCreated;
+    protected String TAG = BaseFragment.class.getSimpleName();
 
-    //mark whether the fragment is visible to user
-    private boolean isUIVisible;
+    //Root View
+    protected View view;
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public BaseFragment() {
-        // Required empty public constructor
-    }
-
-
+    //布局是否初始化完成
+    private boolean isLayoutInitialized = false;
+    //懒加载完成
+    private boolean isLazyLoadFinished = false;
+    //记录页面可见性
+    private boolean isVisibleToUser = false;
+    //不可见时释放部分资源
+    private boolean isInVisibleRelease = false;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        Log.d(TAG, getClass().getSimpleName() + "  onCreate");
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, getClass().getSimpleName() + "  onCreateView");
+        view = inflater.inflate(initLayout(),null);
+        initView();
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, getClass().getSimpleName() + "  onDestroyView");
+
+        //页面释放后，重置布局初始化状态变量
+        isLayoutInitialized = false;
+        this.view = null;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, getClass().getSimpleName() + "  onActivityCreated");
+        //此方法是在第一次初始化时onCreateView之后触发的
+        //onCreateView和onActivityCreated中分别应该初始化哪些数据可以参考：
+        //https://stackoverflow.com/questions/8041206/android-fragment-oncreateview-vs-onactivitycreated
+
+        isLayoutInitialized = true;
+        //第一次初始化后需要处理一次可见性事件
+        //因为第一次初始化时setUserVisibleHint方法的触发要先于onCreateView
+        dispatchVisibleEvent();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, getClass().getSimpleName() + "  onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, getClass().getSimpleName() + "  onResume");
+
+        //页面从其他Activity返回时，重新加载被释放的资源
+        if(isLazyLoadFinished && isLayoutInitialized && isInVisibleRelease){
+//            visibleReLoad();
+
+            isInVisibleRelease = false;
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_base, container, false);
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, getClass().getSimpleName() + "  onPause");
+
+        //当从Fragment切换到其他Activity释放部分资源
+        if(isLazyLoadFinished && isVisibleToUser){
+            //页面从可见切换到不可见时触发，可以释放部分资源，配合reload方法再次进入页面时加载
+//            inVisibleRelease();
+
+            isInVisibleRelease = true;
+        }
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        isViewCreated = true;
-        lazyLoad();
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, getClass().getSimpleName() + "  onDestroy");
+
+        //重置所有数据
+        this.view = null;
+        isLayoutInitialized = false;
+        isLazyLoadFinished = false;
+        isVisibleToUser = false;
+        isInVisibleRelease = false;
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        //isVisibleToUser这个boolean值表示:该Fragment的UI 用户是否可见
-        if (isVisibleToUser) {
-            isUIVisible = true;
+        Log.d(TAG, getClass().getSimpleName() + "  setUserVisibleHint isVisibleToUser = " + isVisibleToUser);
+
+        dispatchVisibleEvent();
+    }
+
+    /**
+     * 处理可见性事件
+     */
+    private void dispatchVisibleEvent(){
+        Log.d(TAG, getClass().getSimpleName() + "  dispatchVisibleEvent isVisibleToUser = " + getUserVisibleHint()
+                + " --- isLayoutInitialized = " + isLayoutInitialized + " --- isLazyLoadFinished = " + isLazyLoadFinished);
+
+        if(getUserVisibleHint() && isLayoutInitialized){
             lazyLoad();
-        } else {
-            isUIVisible = false;
         }
+
+        //处理完可见性事件之后修改isVisibleToUser状态
+        this.isVisibleToUser = getUserVisibleHint();
     }
 
-    private void lazyLoad() {
-        if (isViewCreated && isUIVisible) {
-            loadData();
-            isViewCreated = false;
-            isUIVisible = false;
+    /**
+     * 初始化View
+     */
+    protected abstract void initView();
 
-        }
-    }
+    /**
+     * 绑定布局
+     * @return 布局ID
+     */
+    protected abstract int initLayout();
 
-    protected abstract void loadData();
+    /**
+     * 懒加载<br/>
+     * 只会在初始化后第一次可见时调用一次。
+     */
+    protected abstract void lazyLoad();
+
+    /**
+     * 刷新数据加载<br/>
+     * 配合{@link #lazyLoad()}，在页面非第一次可见时刷新数据
+     */
+
 }
