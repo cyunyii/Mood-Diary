@@ -22,11 +22,10 @@ public abstract class BaseFragment extends Fragment {
     //Root View
     protected View view;
 
-    //布局是否初始化完成
     private boolean isLayoutInitialized = false;
-    //记录页面可见性
+
     private boolean isVisibleToUser = false;
-    //不可见时释放部分资源
+    //release resource
     private boolean isInVisibleRelease = false;
 
     @Override
@@ -65,7 +64,7 @@ public abstract class BaseFragment extends Fragment {
         isLayoutInitialized = true;
         //第一次初始化后需要处理一次可见性事件
         //因为第一次初始化时setUserVisibleHint方法的触发要先于onCreateView
-        dispatchVisibleEvent();
+//        dispatchVisibleEvent();
     }
 
     @Override
@@ -80,11 +79,7 @@ public abstract class BaseFragment extends Fragment {
         Log.d(TAG, getClass().getSimpleName() + "  onResume");
 
         dispatchVisibleEvent();
-        //页面从其他Activity返回时，重新加载被释放的资源
-//        if(isLayoutInitialized && isInVisibleRelease){
-//            dispatchVisibleEvent();
-//            isInVisibleRelease = false;
-//        }
+
     }
 
     @Override
@@ -131,30 +126,22 @@ public abstract class BaseFragment extends Fragment {
         if(getUserVisibleHint() && isLayoutInitialized){
             lazyLoad();
         }
-        //处理完可见性事件之后修改isVisibleToUser状态
+
         this.isVisibleToUser = getUserVisibleHint();
     }
 
-    /**
-     * 初始化View
-     */
+
     protected abstract void initView();
 
     /**
-     * 绑定布局
-     * @return 布局ID
+     * bind layout ID
+     * @return
      */
     protected abstract int initLayout();
 
-    /**
-     * 懒加载<br/>
-     * 只会在初始化后第一次可见时调用一次。
-     */
+
     protected abstract void lazyLoad();
 
-    /**
-     * 刷新数据加载<br/>
-     * 配合{@link #lazyLoad()}，在页面非第一次可见时刷新数据
-     */
+
 
 }

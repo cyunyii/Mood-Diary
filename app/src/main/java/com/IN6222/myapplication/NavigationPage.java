@@ -1,11 +1,9 @@
 package com.IN6222.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +23,7 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
     private RadioGroup radioGroup;
     private MainFragment mainFragment;
     private VisualFragment visualFragment;
-    private LogOut logOut;
+    private LogOutFragment logOutFragment;
     private List<Fragment> list;
 
     @Override
@@ -39,16 +37,16 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
         user=(RadioButton)findViewById(R.id.navi_user);
 
         Drawable drawableFirst = getResources().getDrawable(R.drawable.home);
-        drawableFirst.setBounds(0, 0, 69, 69);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-        home.setCompoundDrawables(null, drawableFirst, null, null);//只放上面
+        drawableFirst.setBounds(0, 0, 69, 69);//left and right；top and bottom；width；height；
+        home.setCompoundDrawables(null, drawableFirst, null, null);
 
         Drawable drawableSec = getResources().getDrawable(R.drawable.visualization);
-        drawableSec.setBounds(0, 0, 69, 69);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-        visual.setCompoundDrawables(null, drawableSec, null, null);//只放上面
+        drawableSec.setBounds(0, 0, 69, 69);//
+        visual.setCompoundDrawables(null, drawableSec, null, null);
 
         Drawable drawableThird = getResources().getDrawable(R.drawable.user);
-        drawableThird.setBounds(0, 0, 69, 69);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-        user.setCompoundDrawables(null, drawableThird, null, null);//只放上面
+        drawableThird.setBounds(0, 0, 69, 69);
+        user.setCompoundDrawables(null, drawableThird, null, null);
 
 
 
@@ -65,14 +63,14 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
 
         mainFragment = new MainFragment();
         visualFragment =new VisualFragment();
-        logOut=new LogOut();
+        logOutFragment =new LogOutFragment();
 
 
         //add fragment to list
         list = new ArrayList<>();
         list.add(mainFragment);
         list.add(visualFragment);
-        list.add(logOut);
+        list.add(logOutFragment);
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),list);
         viewPager.setAdapter(adapter);
@@ -127,7 +125,7 @@ public class NavigationPage extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onPageSelected(int position) {
 
-        //set radioButton status as check based on the current viewpager
+        //set radioButton status as checked based on the current viewpager
         switch (position) {
             case 0:
                 radioGroup.check(R.id.navi_home);

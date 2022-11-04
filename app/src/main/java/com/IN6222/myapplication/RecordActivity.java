@@ -71,11 +71,8 @@ public class RecordActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         if(intent!=null){
-
             RecordBean bean=(RecordBean) intent.getSerializableExtra("bean");
             if(bean!=null){
-                System.out.println("55555555555555555555555555555555555");
-                System.out.println("i am bean， and i am not null");
                 this.recordBean=bean;
                 restoreDetail();
                 firstTimeSave=false;
@@ -88,10 +85,6 @@ public class RecordActivity extends AppCompatActivity {
                 initBean();
             }
         }
-
-
-
-
         //set image icon click event
         setImgClick();
         //inflate from activity_main, display details immediately
@@ -216,15 +209,14 @@ public class RecordActivity extends AppCompatActivity {
      * load img icons in the recording page(Gridview)
      */
     private void LoadMoodImg() {
-        System.out.println("HEHHHHHHH*******************************");
         imglist=new ArrayList<>();
         adapter = new GridViewAdapter(this, imglist);
         gridView.setAdapter(adapter);
         //load data from database
         imglist.addAll(DBManager.getTypeList());
         adapter.notifyDataSetChanged();
-
     }
+
     private void setImgClick() {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -242,8 +234,4 @@ public class RecordActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 }

@@ -25,23 +25,13 @@ public class DBHelper extends SQLiteOpenHelper {
         //create moodType table
         String sql="create table moodtype(id integer primary key autoincrement,description varchar(10),imageId integer)";
         sqLiteDatabase.execSQL(sql);
-        insertType(sqLiteDatabase);
 
-        //create record table
-        /**
-         *     int id;
-         *     String mood;
-         *     int imgId;
-         *     String title;
-         *     String content;
-         *     String date;
-         *     int year;
-         *     int month;
-         *     int day;
-         */
         String RecordSql="create table record(id integer primary key autoincrement,mood varchar(10),uid varchar(200), imgId integer,title varchar(20),content varchar(65535)," +
                 "date varchar(20), year integer, month integer, day integer)";
         sqLiteDatabase.execSQL(RecordSql);
+
+
+        insertType(sqLiteDatabase);
 
     }
 

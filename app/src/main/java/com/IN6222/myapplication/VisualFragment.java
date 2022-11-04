@@ -119,9 +119,9 @@ public class VisualFragment extends BaseFragment {
 
         setData();
 
-//        if(datalist.size()==0){
-//            NodataDialog();
-//        }
+        if(datalist.size()==0){
+            NodataDialog();
+        }
 
         setHeader();
         drawPie();
@@ -221,11 +221,6 @@ public class VisualFragment extends BaseFragment {
         List<chartBean> res= DBManager.searchByType(month,year,uid);
         Log.d("resSize", ""+res.size());
         for(int i=0;i<res.size();i++){
-//            System.out.println("*************lalalalalalala**********");
-//            System.out.println(res.get(i).getCount());
-//            System.out.println(res.get(i).getMoodType());
-//            System.out.println(res.get(i).getPercentage());
-//            System.out.println("**********lalalal************");
             chartBean temp=res.get(i);
             datalist.add(new PieEntry(temp.getCount(),temp.getMoodType()));
             bardataList.add(new BarEntry((float) i,(float) temp.getCount()));
@@ -263,9 +258,6 @@ public class VisualFragment extends BaseFragment {
         pieChart.setEntryLabelColor(Color.BLACK);
         Legend legend=pieChart.getLegend();
         legend.setEnabled(false);
-//        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
-//        legend.setTextSize(14);
-//        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
     }
 
 
@@ -291,9 +283,6 @@ public class VisualFragment extends BaseFragment {
         xAxis.setLabelCount(moodTypes.size());
 
         xAxis.setValueFormatter(new IndexAxisValueFormatter(moodTypes));
-
-
-
         xAxis.setDrawGridLines(false);
         xAxis.setLabelRotationAngle(-20f);
 

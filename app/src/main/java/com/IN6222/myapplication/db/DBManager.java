@@ -116,8 +116,8 @@ public class DBManager {
             int year=cursor.getInt(cursor.getColumnIndexOrThrow("year"));
             int month=cursor.getInt(cursor.getColumnIndexOrThrow("month"));
             int day=cursor.getInt(cursor.getColumnIndexOrThrow("day"));
-//            System.out.println("*****************************************");
-//            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
+            System.out.println("*****************************************");
+            System.out.println(uid+"all???"+id+mood+imgId+title+content+date+year+mood+day);
             RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
             list.add(bean);
         }
@@ -138,22 +138,26 @@ public class DBManager {
      */
     public static List<RecordBean> searchRecordByKeywords(String keyword,String uid){
         List<RecordBean> list=new ArrayList<>();
-        String str= "SELECT  * FROM record where uid=? and title like '%"+keyword+"%' or content like '%"+keyword+"%' order by id desc";
-        Cursor cursor=db.rawQuery(str,new String[]{uid});
+        String str= "SELECT  * FROM record where title like '%"+keyword+"%' or content like '%"+keyword+"%' order by id desc";
+        Cursor cursor=db.rawQuery(str,null);
+
         while(cursor.moveToNext()){
-            int id= cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            String mood=cursor.getString(cursor.getColumnIndexOrThrow("mood"));
-            int imgId=cursor.getInt(cursor.getColumnIndexOrThrow("imgId"));
-            String title=cursor.getString(cursor.getColumnIndexOrThrow("title"));
-            String content=cursor.getString(cursor.getColumnIndexOrThrow("content"));
-            String date=cursor.getString(cursor.getColumnIndexOrThrow("date"));
-            int year=cursor.getInt(cursor.getColumnIndexOrThrow("year"));
-            int month=cursor.getInt(cursor.getColumnIndexOrThrow("month"));
-            int day=cursor.getInt(cursor.getColumnIndexOrThrow("day"));
-//            System.out.println("********************blur search*********************");
-//            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
-            RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
-            list.add(bean);
+            String uid1=cursor.getString(cursor.getColumnIndexOrThrow("uid"));
+            if(uid1.equals(uid)) {
+                int id= cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String mood=cursor.getString(cursor.getColumnIndexOrThrow("mood"));
+                int imgId=cursor.getInt(cursor.getColumnIndexOrThrow("imgId"));
+                String title=cursor.getString(cursor.getColumnIndexOrThrow("title"));
+                String content=cursor.getString(cursor.getColumnIndexOrThrow("content"));
+                String date=cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                int year=cursor.getInt(cursor.getColumnIndexOrThrow("year"));
+                int month=cursor.getInt(cursor.getColumnIndexOrThrow("month"));
+                int day=cursor.getInt(cursor.getColumnIndexOrThrow("day"));
+                System.out.println("********************blur search*********************");
+                System.out.println(""+uid1+"???"+id+mood+imgId+title+content+date+year+mood+day);
+                RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
+                list.add(bean);
+            }
         }
         cursor.close();
         return list;
@@ -211,7 +215,7 @@ public class DBManager {
             String title=cursor.getString(cursor.getColumnIndexOrThrow("title"));
             String content=cursor.getString(cursor.getColumnIndexOrThrow("content"));
             String date=cursor.getString(cursor.getColumnIndexOrThrow("date"));
-//            System.out.println("********************blur search*********************");
+//            System.out.println("********************printl*********************");
 //            System.out.println(""+id+mood+imgId+title+content+date+year+mood+day);
             RecordBean bean=new RecordBean(id,uid,mood,imgId,title,content,date,year,month,day);
             list.add(bean);

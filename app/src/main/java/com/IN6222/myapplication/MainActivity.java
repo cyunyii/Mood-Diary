@@ -120,24 +120,6 @@ public class MainActivity extends AppCompatActivity {
                 // below line is used for getting current user which is
                 // authenticated previously.
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
-
-                // checking if the user
-                // is null or not.
-//                if (user != null) {
-//
-//                    System.out.println("I am a user. I am already login in");
-//                    // if the user is already authenticated then we will
-//                    // redirect our user to next screen which is our home screen.
-//                    // we are redirecting to new screen via an intent.
-//                    Intent i = new Intent(MainActivity.this, NavigationPage.class);
-//                    startActivity(i);
-//                    // we are calling finish method to kill or
-//                    // mainactivity which is displaying our login ui.
-//                    finish();
-//                } else {
-                    // this method is called when our
-                    // user is not authenticated previously.
                     startActivityForResult(
                             // below line is used for getting
                             // our authentication instance.
@@ -194,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     mFirebaseAuth.addAuthStateListener(mAuthStateListner);
-
                 }
             });
         }
